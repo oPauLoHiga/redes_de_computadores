@@ -1,125 +1,80 @@
-# Laboratório de Redes de Computadores — Packet Tracer e Camada de Enlace
+# Redes de Computadores com Cisco Packet Tracer
 
-Projeto acadêmico desenvolvido para a disciplina de **Laboratório de Redes de Computadores**, com o objetivo de observar na prática o funcionamento da **Camada de Enlace**, utilizando o **Cisco Packet Tracer**.
+Repositório de estudos práticos sobre redes de computadores. Os laboratórios foram montados no Cisco Packet Tracer e documentam conceitos das camadas de enlace e de rede, endereçamento IPv4, subnetagem, roteamento e tolerância a falhas.
 
-A atividade consistiu na criação e simulação de duas redes locais: uma utilizando **Hub** e outra utilizando **Switch**, permitindo comparar a forma como esses dispositivos encaminham os dados.
+![Mapa mental das aulas de redes de computadores](mm_redes.png)
 
-## Objetivos
+## Projetos
 
-Os principais objetivos da atividade foram:
+### Hub e switch na camada de enlace
 
-- Familiarizar-se com a interface do Cisco Packet Tracer.
-- Construir topologias de rede simples.
-- Adicionar e conectar computadores utilizando cabos de rede.
-- Configurar endereços IP estáticos.
-- Comparar o funcionamento de Hub e Switch.
-- Observar o comportamento dos endereços MAC.
-- Utilizar o modo de simulação do Packet Tracer para acompanhar o fluxo dos pacotes na rede.
+Comparação do comportamento de hubs e switches durante o encaminhamento de quadros.
 
-## Ferramentas utilizadas
+Conceitos praticados:
 
-- Cisco Packet Tracer
-- PC-PT
-- Hub-PT
-- Switch Cisco 2960
-- Cabos Copper Straight-Through
-- CLI do Switch
-- Modo Simulation do Packet Tracer
+- endereços MAC e tabela MAC;
+- ARP e ICMP;
+- broadcast;
+- domínios de colisão;
+- simulação de pacotes no Packet Tracer.
 
-## Cenário 1 — Rede com Hub
+Arquivos principais:
 
-No primeiro cenário foi criada uma rede contendo:
+- [`Atividade.pkt`](Atividades/Atividade.pkt): cenário com hub;
+- [`atividade02.pkt`](Atividades/atividade02.pkt): cenário com switch.
 
-- 1 Hub-PT
-- 4 computadores PC-PT
-- 4 conexões utilizando cabo direto
+### Roteamento estático e RIP v2
 
-Os computadores foram configurados da seguinte forma:
+Topologia com três LANs e três roteadores interligados em triângulo. O laboratório compara rotas configuradas manualmente com rotas aprendidas pelo RIP v2.
 
-| Estação | Endereço IP | Máscara |
-|---|---|---|
-| PC0 | 192.168.1.1 | 255.255.255.0 |
-| PC1 | 192.168.1.2 | 255.255.255.0 |
-| PC2 | 192.168.1.3 | 255.255.255.0 |
-| PC3 | 192.168.1.4 | 255.255.255.0 |
+Conceitos praticados:
 
-Após a configuração, foi utilizado o modo **Simulation** para enviar um pacote PDU do **PC0 para o PC2**.
+- subnetagem VLSM;
+- rotas estáticas;
+- RIP versão 2;
+- distância administrativa e métrica por saltos;
+- testes com `ping` e `tracert`;
+- convergência e caminho alternativo após a falha de um enlace.
 
-Durante a simulação foi possível observar que o Hub replica o pacote recebido para todos os computadores conectados, mesmo quando apenas um deles é o destino da comunicação.
+Arquivos principais:
 
-## Cenário 2 — Rede com Switch
+- [`lab08_estatico.pkt`](Atividades/lab08_estatico.pkt): roteamento estático;
+- [`lab08_rip.pkt`](Atividades/lab08_rip.pkt): roteamento dinâmico;
+- [`relatório público`](Atividades/Relatorio_Aula_08_publico.docx): evidências e análise sem dados pessoais.
 
-No segundo cenário foi criada uma nova rede contendo:
+## Topologia do laboratório de roteamento
 
-- 1 Switch Cisco 2960
-- 4 computadores PC-PT
-- 4 conexões utilizando cabo direto
+O bloco `192.168.10.0/24` foi dividido para atender três unidades:
 
-A configuração utilizada foi:
+| Segmento | Rede | Máscara | Hosts utilizáveis |
+|---|---|---|---:|
+| Matriz | `192.168.10.0/25` | `255.255.255.128` | 126 |
+| Filial Norte | `192.168.10.128/26` | `255.255.255.192` | 62 |
+| Filial Sul | `192.168.10.192/27` | `255.255.255.224` | 30 |
 
-| Estação | Endereço IP | Máscara |
-|---|---|---|
-| PC4 | 192.168.10.1 | 255.255.255.0 |
-| PC5 | 192.168.10.2 | 255.255.255.0 |
-| PC6 | 192.168.10.3 | 255.255.255.0 |
-| PC7 | 192.168.10.4 | 255.255.255.0 |
+Os enlaces entre roteadores utilizam redes `/30`. Com RIP ativo, a remoção do enlace direto entre R1 e R2 faz o tráfego seguir pelo caminho alternativo R1–R3–R2.
 
-Foi realizada uma comunicação entre o **PC4 e o PC6** para observar o comportamento do Switch e sua tabela de endereços MAC.
+## Como executar
 
-## Tabela MAC
+1. Instale o Cisco Packet Tracer 9 ou uma versão compatível.
+2. Abra um dos arquivos `.pkt` da pasta `Atividades`.
+3. Use o modo **Realtime** para testar `ping` e `tracert`.
+4. Use o modo **Simulation** para acompanhar o fluxo de pacotes.
 
-A CLI do Switch foi utilizada para visualizar sua tabela MAC.
+## Organização do repositório
 
-O comando utilizado foi:
+```text
+redes_de_computadores/
+├── Atividades/
+│   ├── Atividade.pkt
+│   ├── atividade02.pkt
+│   ├── lab08_estatico.pkt
+│   ├── lab08_rip.pkt
+│   └── Relatorio_Aula_08_publico.docx
+├── mm_redes.png
+└── README.md
+```
 
-~~~bash
-show mac-address-table
-~~~
+## Observação sobre os materiais de aula
 
-Esse comando permite visualizar os endereços MAC aprendidos pelo Switch e as portas associadas a eles.
-
-Durante a atividade também foi utilizado o comando:
-
-~~~bash
-clear mac-address-table dynamic
-~~~
-
-O objetivo dessa etapa foi apagar as entradas dinâmicas da tabela MAC do Switch e observar novamente o comportamento do encaminhamento dos quadros.
-
-Após novas comunicações entre os computadores, a tabela MAC foi consultada novamente para observar as entradas aprendidas pelo Switch.
-
-## ARP e ICMP
-
-Durante a primeira comunicação entre PC4 e PC6, foi observado o processo de resolução do endereço MAC utilizando **ARP**.
-
-Como os computadores ainda não haviam se comunicado, o PC4 precisava descobrir o endereço MAC do PC6. Para isso, foi utilizado um **ARP Request em broadcast**.
-
-Depois que o Switch aprendeu as portas relacionadas aos dispositivos, os pacotes ICMP puderam ser encaminhados diretamente para o destino.
-
-## Hub x Switch
-
-A principal diferença observada durante as simulações foi a forma como cada dispositivo encaminha os dados.
-
-O **Hub** envia o pacote para todos os dispositivos conectados, mesmo quando apenas um computador é o destino.
-
-O **Switch**, por outro lado, aprende os endereços MAC dos dispositivos conectados e identifica em qual porta cada equipamento está localizado. Dessa forma, após aprender essas informações, consegue encaminhar os dados diretamente para o dispositivo correto.
-
-Além disso, no Hub todos os dispositivos compartilham o mesmo domínio de colisão, enquanto no Switch cada porta forma um domínio separado.
-
-## Principais conceitos trabalhados
-
-Durante a atividade foram trabalhados conceitos como:
-
-- Camada de Enlace
-- Endereço MAC
-- Endereçamento IPv4
-- Máscara de rede
-- Hub
-- Switch
-- Domínio de colisão
-- Tabela MAC
-- ARP
-- ICMP
-- Broadcast
-- Encaminhamento de quadros
-- Simulação de tráfego de rede
+Os PDFs, guias fornecidos pela instituição e relatórios com dados pessoais não fazem parte da versão pública do repositório. O projeto publica apenas arquivos produzidos durante os estudos e relatórios preparados para o portfólio.

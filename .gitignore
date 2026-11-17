@@ -1,0 +1,17 @@
+# Materiais didáticos de terceiros
+aulas_em_pdf/
+Guia_de_Estudos_Redes_de_Computadores_Aulas_01_a_06.pdf
+
+# Relatório acadêmico com dados pessoais
+Atividades/Relatorio_Aula_08_Laboratorio_Roteamento_e_Subredes_atualizado.docx
+Atividades/Aula 05 - Lab 01 - Introducao ao Packet Tracer e a Camada de Enlace.pdf
+
+# Versão intermediária do laboratório (as versões finais estão no README)
+Atividades/laboratorio_roteamento_subredes.pkt
+
+# Anotações e arquivos temporários
+Redes de Computadores.txt
+~$*.docx
+*.tmp
+Thumbs.db
+.DS_Store
